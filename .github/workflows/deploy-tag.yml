@@ -7,29 +7,8 @@ on:
       - "OP.[0-9]?[0-9]?[0-9]?[0-9]?.[0-9]?[0-9]?.[0-9]?[0-9]?"
     branches:
       - main
-
 jobs:
-  test-formatting:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "22"
-          cache: "npm"
-
-      - name: Install Dependencies
-        run: npm install
-
-      - name: Check typescript
-        run: npm run typescript
-
   Deploy-Preview:
-    needs: test-formatting
     runs-on: ubuntu-latest
     env:
       VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}

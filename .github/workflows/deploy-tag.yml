@@ -31,5 +31,7 @@ jobs:
           url=$(vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }})
           echo "name=url::$url" >> $GITHUB_OUTPUT
 
+      - name: Check vercel scope
+        run: vercel switch --token=${{ secrets.VERCEL_TOKEN }}
       - name: Alias Preview Deployment
         run: vercel alias nextjs-blog-tau-sepia-23.vercel.app ${{ steps.deploy.outputs.url }} --token=${{ secrets.VERCEL_TOKEN }}

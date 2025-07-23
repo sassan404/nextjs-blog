@@ -32,6 +32,8 @@ jobs:
       #     echo "name=url::$url" >> $GITHUB_OUTPUT
 
       - name: Check vercel scope
-        run: vercel switch --scope=${{ secrets.VERCEL_ORG_ID  }}
+        run: vercel switch --scope=your-team-name
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
       - name: Alias Preview Deployment
         run: vercel alias nextjs-blog-tau-sepia-23.vercel.app  https://nextjs-blog-58zh97i22-hasanism404-gmailcoms-projects.vercel.app --token=${{ secrets.VERCEL_TOKEN }}

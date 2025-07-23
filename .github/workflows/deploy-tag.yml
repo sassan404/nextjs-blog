@@ -49,7 +49,7 @@ jobs:
         id: deploy
         run: |
           url=$(vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }})
-          echo "::set-output name=url::$url"
+          echo "name=url::$url" >> $GITHUB_OUTPUT
 
       - name: Alias Preview Deployment
         run: vercel alias nextjs-blog-tau-sepia-23.vercel.app ${{ steps.deploy.outputs.url }} --token=${{ secrets.VERCEL_TOKEN }}

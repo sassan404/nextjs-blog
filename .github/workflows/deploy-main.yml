@@ -30,4 +30,4 @@ jobs:
           echo "name=url::$url" >> $GITHUB_OUTPUT
 
       - name: Alias Preview Deployment
-        run: vercel alias preview-nextjs-blog-tau-sepia-23.vercel.app  ${{ steps.deploy.outputs.url }}  --token=${{ secrets.VERCEL_TOKEN }}  --scope=${{ secrets.VERCEL_ORG_ID }}
+        run: vercel alias preview.octalysisprime.com  ${{ steps.deploy.outputs.url }}  --token=${{ secrets.VERCEL_TOKEN }}  --scope=${{ secrets.VERCEL_ORG_ID }}

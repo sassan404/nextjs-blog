@@ -31,4 +31,4 @@ jobs:
           echo "name=url::$url" >> $GITHUB_OUTPUT
 
       - name: Alias Production Domain
-        run: vercel alias learning.preview.octalysisprime.com  ${{ steps.deploy.outputs.url }}  --token=${{ secrets.VERCEL_TOKEN }}  --scope=${{ secrets.VERCEL_ORG_ID }}
+        run: vercel alias learning.octalysisprime.com  ${{ steps.deploy.outputs.url }}  --token=${{ secrets.VERCEL_TOKEN }}  --scope=${{ secrets.VERCEL_ORG_ID }}

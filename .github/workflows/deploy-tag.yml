@@ -32,4 +32,4 @@ jobs:
       #     echo "name=url::$url" >> $GITHUB_OUTPUT
 
       - name: Alias Preview Deployment
-        run: vercel alias nextjs-blog-tau-sepia-23.vercel.app  https://nextjs-blog-58zh97i22-hasanism404-gmailcoms-projects.vercel.app --token=${{ secrets.VERCEL_TOKEN }}  -- scope=${{ secrets.VERCEL_ORG_ID }}
+        run: vercel alias nextjs-blog-tau-sepia-23.vercel.app  https://nextjs-blog-58zh97i22-hasanism404-gmailcoms-projects.vercel.app --token=${{ secrets.VERCEL_TOKEN }}  --scope=${{ secrets.VERCEL_ORG_ID }}

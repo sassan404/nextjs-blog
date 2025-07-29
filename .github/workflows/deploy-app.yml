@@ -1,25 +1,30 @@
-name: Deploy to production
+name: Deploy
 
 on:
   workflow_dispatch:
   push:
     tags:
-      - "OP.[0-9]?[0-9]?[0-9]?[0-9]?.[0-9]?[0-9]?.[0-9]?[0-9]?"
+      - "OP.[0-9][0-9][0-9][0-9].[0-9][0-9]?.[0-9][0-9]?.R[0-9]"
+    branches:
+      - main
 
 jobs:
-  Deploy-Production:
+  deploy:
+    name: Deploy to Vercel
     runs-on: ubuntu-latest
     env:
       VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
       VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
       VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      ENV_TYPE: ${{ github.ref_type == 'tag' && 'production' || 'preview' }}
+      DOMAIN: ${{ github.ref_type == 'tag' && 'test-learning.octalysisprime.com' || 'test-preview.octalysisprime.com' }}
     steps:
       - uses: actions/checkout@v4
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
 
       - name: Pull Vercel Environment Information
-        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+        run: vercel pull --yes --environment=${{ env.ENV_TYPE }} --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: Build Project Artifacts
         run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
@@ -30,5 +35,5 @@ jobs:
           url=$(vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }})
           echo "name=url::$url" >> $GITHUB_OUTPUT
 
-      - name: Alias Production Domain
-        run: vercel alias learning.octalysisprime.com  ${{ steps.deploy.outputs.url }}  --token=${{ secrets.VERCEL_TOKEN }}  --scope=${{ secrets.VERCEL_ORG_ID }}
+      - name: Alias Domain
+        run: vercel alias ${{ env.DOMAIN }}  ${{ steps.deploy.outputs.url }}  --token=${{ secrets.VERCEL_TOKEN }}  --scope=${{ secrets.VERCEL_ORG_ID }}

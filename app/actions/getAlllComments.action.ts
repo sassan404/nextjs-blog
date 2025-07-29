@@ -3,7 +3,7 @@
 import { neon } from "@neondatabase/serverless";
 
 // Simple server action for direct form usage
-export async function createComment(formData: FormData) {
+export async function getAllComments(): Promise<any[]> {
   try {
     const sql = neon(process.env.DATABASE_URL ?? "");
 
@@ -13,14 +13,10 @@ export async function createComment(formData: FormData) {
                 created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
                 )`;
 
-    const comment = formData.get("comment");
-    await sql`INSERT INTO comments (comment) VALUES (${comment})`;
-
-    console.log("Comment created successfully!");
-
-    return { success: true };
+    const comments = await sql`SELECT * FROM comments`;
+    return Array.from(comments);
   } catch (error) {
-    console.error("Error creating comment:", error);
-    return { success: false };
+    console.error("Error fetching comments:", error);
+    return [];
   }
 }
